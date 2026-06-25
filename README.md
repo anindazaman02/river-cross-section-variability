@@ -1,4 +1,4 @@
-# Quantitative Morphodynamics and Statistical Variability Modeling of River Cross-Sections (Station: RMBR27)
+# Quantitative Morphodynamics and Statistical Variability Modeling of River Cross-Sections
 
 [![Language](https://img.shields.io/badge/Language-R%20%2F%20RStudio-blue?logo=r&logoColor=white)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
