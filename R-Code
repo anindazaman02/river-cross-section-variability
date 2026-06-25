@@ -1,0 +1,49 @@
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(pracma)
+
+
+# Load Data
+
+file_path <- "E:/8th Semester/Research/River/data/Cross_SectionRMBR27.xlsx"
+df <- read_excel(file_path)
+
+# Clean & Prepare Data
+df <- df %>%
+  filter(!is.na(`DISTANCE(m)`), !is.na(`RL(m)`)) %>%
+  mutate(
+    Year = format(as.Date(DATE), "%Y"),
+    Distance = as.numeric(`DISTANCE(m)`),
+    RL = as.numeric(`RL(m)`)
+  )
+
+
+# Summary Statistics Per Year
+
+summary_df <- df %>%
+  group_by(Year) %>%
+  summarise(
+    Mean_RL = mean(RL),
+    Min_RL = min(RL),
+    SD_RL   = sd(RL),
+    SE_RL   = sd(RL) / sqrt(n()),
+    Area_m2 = trapz(Distance, RL)
+  )
+
+print(summary_df)
+
+
+# Plot Cross-Section Profile
+
+ggplot(df, aes(x = Distance, y = RL, color = Year)) +
+  geom_line(size = 1.2) +
+  labs(title = "Cross-Sectional Profile: RMBR1",
+       x = "Distance (m)", y = "Reduced Level (RL in m)") +
+  theme_minimal()
+
+
+# Save Output Table
+
+write.csv(summary_df, "RMBR27_CrossSection_Summary.csv", row.names = FALSE)
+
